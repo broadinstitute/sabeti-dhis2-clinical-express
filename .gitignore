@@ -1,0 +1,15 @@
+# Ignore all node_modules
+node_modules/*
+
+.DS_Store
+
+# webpack bundle
+public/bundle.js
+public/bundle.js.map
+
+# Secrets
+secrets.js
+
+# NPM errors
+npm-debug.log
+!/app/components/LoginForm.jsx
