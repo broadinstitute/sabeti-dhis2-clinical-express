@@ -35,6 +35,7 @@ exports.getDhis = async (req, res) => {
 
 exports.getDataElements = async (req, res) => {
 	let elementIds = req.params.ids;
+	console.log(elementIds);
 	let headers = {
     'Accept': 'application/json'
 };
