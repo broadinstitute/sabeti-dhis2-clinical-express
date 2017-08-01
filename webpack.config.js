@@ -3,7 +3,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = process.env.NODE_ENV === 'development'
 
 const config = {
-  entry: './app/main.js',
+  entry: ['babel-polyfill', './app/main.js'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public')
@@ -14,6 +14,9 @@ const config = {
   extensions: ['.js', '.json', '*']
   },
   module: {
+    loaders: [
+      { test: /\.jsx?$/, loader: 'babel', }
+    ],
     rules: [{
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,

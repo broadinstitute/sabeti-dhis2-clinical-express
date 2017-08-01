@@ -2,6 +2,7 @@ const http = require('http');
 const request = require('request');
 
 let content = ''
+let content2 = ''
 
 let qd = {
 	program: 'Kenema 2014 Outbreak',
@@ -15,6 +16,7 @@ exports.getMain = async (req, res) => {
 
 
 exports.getDhis = async (req, res) => {
+
 	let headers = {
     'Accept': 'application/json'
 };
@@ -49,8 +51,8 @@ exports.getDataElements = async (req, res) => {
 	  }
 	};
 
-	await request(options, callback);
-	res.send(content)
+	await request(options, callback2);
+	res.send(content2)
 }
 
 
@@ -63,3 +65,10 @@ function callback(error, response, body) {
     }
 }
 
+
+function callback2(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        content2 = body;
+        return content2
+    }
+}
