@@ -29,18 +29,12 @@ axios.get(`http://localhost:3000/api/dhis`)
 	})
 	.then(response => {
 		const data = response.data;
-		const namesMap = new Map();
-		let cases = [];
-		let values = [];
-		let testing = {};
+		let namesMap = {};
 		
 		data.dataElements.forEach(el => {
-		testing[el.id] = el.displayName;
-		namesMap.set(el.id, el.displayName);
+		namesMap[el.id] = el.displayName;
 		})
-		console.log(testing);
-		return testing;
-		// return namesMap;
+		return namesMap;
 	})
 	.then(response => {
 		let namesMap = response;
@@ -65,5 +59,29 @@ axios.get(`http://localhost:3000/api/dhis`)
 					values.push(object);
 				}
 				console.log(values);
+				let geoJSON = [];
+				for (const [index, object] of values.entries()){
+					geoJSON[index] = {
+			      type: "FeatureCollection",
+			      "features": [
+				      { "type": "Feature",
+								"geometry": {type: "Point", "coordinates": getCoords(object['Household location'])},
+					      "properties": {
+									object
+					      }
+				      }
+			      ]
+			    } //END geoJSON
+				}
+				console.log(geoJSON);
 			})
 	})
+
+	function getCoords(str){
+		if (str === undefined){
+			return [undefined, undefined]
+		} else {
+			let coords = str.replace(/\[/,'').replace(/\]/,'').split(',')
+			return [+coords[0], +coords[1]]
+		}
+	}
