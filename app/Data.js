@@ -84,9 +84,8 @@ import {dispatch} from 'd3';
 			      "features": [
 				      { "type": "Feature",
 								"geometry": {type: "Point", "coordinates": getCoords(object['Household location'])},
-					      "properties": {
+					      "properties":
 									object
-					      }
 				      }
 			      ]
 			    } //END geoJSON
@@ -119,6 +118,7 @@ import {dispatch} from 'd3';
 	//this function gets the data out of the Promise chain
 	function exports(data){
 		dis.call('loaded', null, {data: data})
+		// dis.call('loaded', null, console.log(data))
 	}
 
 	exports.on = function(event, callback){

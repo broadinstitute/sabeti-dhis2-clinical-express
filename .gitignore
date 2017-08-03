@@ -8,7 +8,7 @@ public/bundle.js
 public/bundle.js.map
 
 # Secrets
-secrets.js
+Secret.js
 
 # NPM errors
 npm-debug.log
