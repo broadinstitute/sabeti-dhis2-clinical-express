@@ -13,7 +13,6 @@ import DataLoader from './Data';
 import Timeline from './Timeline';
 import Details from './Details';
 import Fasta from './Fasta';
-// import {projectPoint, updateHexCoords} from './Utils';
 import Secret from '../Secret';
 
 
@@ -45,12 +44,34 @@ let getData = DataLoader()
  .on('loaded', data => {
  		let dummyCases = data.data;
 
+    var customControl = L.control.Element = L.Control.extend({
+      options: {
+        position: 'topright'
+      },
+      onAdd: function(map){
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+
+        container.style.backgroundColor = 'white';
+        container.style.backgroundSize = "30px 60px";
+        container.innerHTML =
+        `
+        <a id="cluster-btn" class="leaflet-control-zoom-in" href="#" value="1" role="button" aria-label="Cluster">
+        <img src="../img/hexagon.svg"></img>
+        </a>
+        <a id="cases-btn" class="leaflet-control-zoom-in" href="#" value="1" aria-label="Cases"></a>
+        `
+        return container;
+      }
+    });
+
+
     const mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
     map = L.map('map').setView([8.4506145, -11.3474766], 9);
     L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=${Secret.mapbox}`, {
       maxZoom: 18,
       }).addTo(map);
     L.svg().addTo(map)
+    map.addControl(new customControl());
 
 
     const casesByDate = d3.nest()
