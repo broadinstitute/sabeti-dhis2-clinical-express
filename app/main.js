@@ -74,7 +74,6 @@ let getData = DataLoader()
 
       if (activeState == 0) {
         button.setAttribute('value', 1); //if button is active
-        console.log('hexes turned to 1')
         dis.call('hexesTrig', null, {})
 
         redraw(dummyCases, false, true);
@@ -92,7 +91,6 @@ let getData = DataLoader()
       
       if (activeState == 0) {
         button.setAttribute('value', 1); //if button is active
-        console.log('cases turned to 1')
         dis.call('casesTrig', null, {})
 
         redraw(dummyCases, true, false);
@@ -163,13 +161,12 @@ function redraw(array, _points, _hexes) {
           .attr("fill-opacity", 0.4)
           .attr('style', 'pointer-events:visiblePainted;')
           .on('mouseover', function(d) {
-            console.log(d);
             let id = d.features[0].properties['GenBank IDs'];
             Fasta(id);
           })
           .on('mouseout', function(d) {
             let detailsNode = document.getElementById('hexDetails');
-            detailsNode.innerHTML = '';
+            // detailsNode.innerHTML = '';
           });
       }
     }//end of Update
@@ -177,7 +174,6 @@ function redraw(array, _points, _hexes) {
 
 
   function drawHexes(data){
-    console.log('drawHexes triggered');
     const svg = d3.select('#map').select('svg');
     const width = +svg.attr('width');
     const height = +svg.attr('height');
@@ -193,7 +189,6 @@ function redraw(array, _points, _hexes) {
     update();
 
     function update(){
-      console.log('update inside drawHexes')
       let hexagons = svg
         .selectAll('.hexagon')
         .data(hex(updateHexCoords(data)).sort(function(a,b) { return b-length - a.length; }));

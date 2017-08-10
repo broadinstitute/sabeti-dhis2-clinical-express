@@ -22,7 +22,7 @@ exports.getDhis = async (req, res) => {
 };
 
 	let options = {
-	    url: `http://localhost:8085/api/events?program=${qd.programid}`,
+	    url: `http://localhost:8085/api/events.json?pageSize=300&program=${qd.programid}`,
 	    headers: headers,
 	    auth: {
 	        'user': 'admin',

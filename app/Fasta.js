@@ -14,7 +14,7 @@ function Fasta(id){
     	let detailsNode = document.getElementById('hexDetails');
     	const markup = `
         <h5>
-          ${ fasta.split(',')[0] }</span>
+          ${ fasta.slice(0, 300) }...</span>
         </h5>
         `;
 
