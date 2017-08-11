@@ -101,10 +101,6 @@ svg {
 	fill: purple;
 }
 
-.hide {
-	// visibility: hidden;
-	fill: blue;
-}
 
 #hexDetails{
 	margin: 10px;
@@ -112,7 +108,32 @@ svg {
 }
 
 
-#cluster > img{
-	height: 30px;
-	width: 30px;
+#toggle-container{
+	#cluster-btn{
+		width: 30px;
+		height: 30px;
+		margin: 0;
+		text-align: center;
+		border-bottom: 1px solid #777;
+
+		img {
+			width: 25px;
+			vertical-align: middle;
+			display: inline-block;
+			margin-bottom: 3px;
+		}
+	}
+	#cases-btn{
+		width: 30px;
+		height: 30px;
+		margin: 0;
+		text-align: center;
+
+		img{
+			height: 22px;
+			vertical-align: middle;
+			display: inline-block;
+			margin-bottom: 3px;
+		}
+	}
 }

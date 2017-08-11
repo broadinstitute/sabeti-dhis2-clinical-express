@@ -15,6 +15,8 @@ import Details from './Details';
 import Fasta from './Fasta';
 import Secret from '../Secret';
 
+import clusterSvg from './img/hexagon.svg'
+import casesSvg from './img/cases.svg'
 
 let dis = d3.dispatch('timeUpdate', 'casesTrig', 'hexesTrig');
 let details = Details();
@@ -50,15 +52,17 @@ let getData = DataLoader()
       },
       onAdd: function(map){
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-
+        container.id = 'toggle-container';
         container.style.backgroundColor = 'white';
         container.style.backgroundSize = "30px 60px";
         container.innerHTML =
         `
-        <a id="cluster-btn" class="leaflet-control-zoom-in" href="#" value="1" role="button" aria-label="Cluster">
-        <img src="../img/hexagon.svg"></img>
-        </a>
-        <a id="cases-btn" class="leaflet-control-zoom-in" href="#" value="1" aria-label="Cases"></a>
+        <div id="cluster-btn" class="leaflet-control-zoom-in" href="#" value="1" role="button" aria-label="Cluster">
+          <img src="./${clusterSvg}"></img>
+        </div>
+        <div id="cases-btn" class="leaflet-control-zoom-in" href="#" value="1" aria-label="Cases">
+          <img src="./${casesSvg}"></img>
+        </div>
         `
         return container;
       }
@@ -86,6 +90,9 @@ let getData = DataLoader()
     document.getElementById('cluster-btn').onclick = showCluster;
     document.getElementById('cases-btn').onclick = showCases;
 
+    d3.select('#cluster-btn').style('background-color', '#addd8e');
+     d3.select('#cases-btn').style('background-color', '#addd8e');
+
     redraw(dummyCases, false, true); //draw on
     redraw(dummyCases, true, false); //draw on 
 
@@ -95,13 +102,15 @@ let getData = DataLoader()
 
       if (activeState == 0) {
         button.setAttribute('value', 1); //if button is active
-        dis.call('hexesTrig', null, {})
+        d3.select(button).transition().style('background-color', '#addd8e');
+        dis.call('hexesTrig', null, {});
 
         redraw(dummyCases, false, true);
       
       } else {
-        button.setAttribute('value', 0)
-        d3.selectAll('path.hexagon').remove();        
+        button.setAttribute('value', 0);
+        d3.selectAll('path.hexagon').remove();
+        d3.select(button).transition().style('background-color', 'white');       
       }
     }
 
@@ -112,13 +121,15 @@ let getData = DataLoader()
       
       if (activeState == 0) {
         button.setAttribute('value', 1); //if button is active
+        d3.select(button).transition().style('background-color', '#addd8e');
         dis.call('casesTrig', null, {})
 
         redraw(dummyCases, true, false);
 
       } else { // if button is disabled
-        button.setAttribute('value', 0)
+        button.setAttribute('value', 0);
         d3.selectAll('path.point-case').remove();
+        d3.select(button).transition().style('background-color', 'white');
       }
     }
   }); //-->END .on('loaded')
