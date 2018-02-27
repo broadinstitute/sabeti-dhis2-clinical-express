@@ -22,7 +22,7 @@
     "chalk": "^2.0.1",
     "d3": "^4.10.0",
     "d3-hexbin": "^0.2.2",
-    "ecstatic": "^1.4.0",
+    "ecstatic": "^2.0.0",
     "es6-promise": "^4.1.1",
     "express": "^4.15.2",
     "isomorphic-fetch": "^2.2.1",

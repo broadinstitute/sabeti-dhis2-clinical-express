@@ -90,8 +90,8 @@ let getData = DataLoader()
     document.getElementById('cluster-btn').onclick = showCluster;
     document.getElementById('cases-btn').onclick = showCases;
 
-    d3.select('#cluster-btn').style('background-color', '#addd8e');
-     d3.select('#cases-btn').style('background-color', '#addd8e');
+    d3.select('#cluster-btn').style('background-color', '#26c18a');
+    d3.select('#cases-btn').style('background-color', '#26c18a');
 
     redraw(dummyCases, false, true); //draw on
     redraw(dummyCases, true, false); //draw on 
@@ -102,7 +102,7 @@ let getData = DataLoader()
 
       if (activeState == 0) {
         button.setAttribute('value', 1); //if button is active
-        d3.select(button).transition().style('background-color', '#addd8e');
+        d3.select(button).transition().style('background-color', '#26c18a');
         dis.call('hexesTrig', null, {});
 
         redraw(dummyCases, false, true);
@@ -121,7 +121,7 @@ let getData = DataLoader()
       
       if (activeState == 0) {
         button.setAttribute('value', 1); //if button is active
-        d3.select(button).transition().style('background-color', '#addd8e');
+        d3.select(button).transition().style('background-color', '#26c18a');
         dis.call('casesTrig', null, {})
 
         redraw(dummyCases, true, false);
@@ -186,7 +186,12 @@ function redraw(array, _points, _hexes) {
         featureElement
           .enter().append('path')
           .attr('d', path)
-          .attr('fill', 'red')
+          .attr('fill', function(d) {
+            var outcome = d.features[0].properties['Kenema | Outcome'];
+            if (outcome === 'Died'){
+              return 'blue'
+            } else return 'green'
+          })
           .attr('class', 'point-case')
           .merge(featureElement)
           .attr('d', path)
@@ -198,7 +203,7 @@ function redraw(array, _points, _hexes) {
           })
           .on('mouseout', function(d) {
             let detailsNode = document.getElementById('hexDetails');
-            // detailsNode.innerHTML = '';
+            detailsNode.innerHTML = '';
           });
       }
     }//end of Update
@@ -210,63 +215,97 @@ function redraw(array, _points, _hexes) {
     const width = +svg.attr('width');
     const height = +svg.attr('height');
     let hex = hexbin()
-      .radius(30)
+      .radius(40)
       .extent([[0, 0], [width, height]])
 
     let color = d3.scaleQuantize()
-      .domain([1, 7])
+      .domain([1, 5])
       .range(['#fef0d9','#fdcc8a','#fc8d59','#d7301f'])
+
+    let colorAxis = d3.axisRight(color);
 
     map.on('zoom movend viewreset', update);
     update();
 
     function update(){
-      let hexagons = svg
-        .selectAll('.hexagon')
-        .data(hex(updateHexCoords(data)).sort(function(a,b) { return b-length - a.length; }));
+      if (document.getElementById('cluster-btn').getAttribute('value') == 1){
+        // let gradientSvg = d3.select('#gradient').append('svg').attr('width', 100).attr('height', 500)
+        // let defs = gradientSvg.append('defs');
 
-      hexagons.exit().remove();
-      hexagons
-        .enter().append('path')
-        .attr('d', hex.hexagon())
-        .attr('class', 'hexagon')
-        .attr('fill-opacity', .5)
-        .merge(hexagons)
+        // let linearGradient = defs.append('linearGradient').attr('id', 'linear-gradient');
+
+        // linearGradient
+        //   .attr("x1", "0%")
+        //   .attr("y1", "0%")
+        //   .attr("x2", "0%")
+        //   .attr("y2", "100%");
+
+        // linearGradient.append('stop')
+        //   .attr('offset', '0%')
+        //   .attr('stop-color', '#fef0d9');
+
+        // linearGradient.append('stop')
+        //   .attr('offset', '100%')
+        //   .attr('stop-color', '#d7301f');
+
+        // gradientSvg.append('rect')
+        //   .attr('width', 20)
+        //   .attr('height', 200)
+        //   .style('fill', 'url(#linear-gradient)')
+        //   .attr('transform', 'translate(' + 12 + ',' + 150 + ')');
+
+        // gradientSvg.append("g")
+        //   .attr('transform', 'translate(' + 12 + ',' + 150 + ')')
+        //   .call(colorAxis);
+
+
+        let hexagons = svg
+          .selectAll('.hexagon')
+          .data(hex(updateHexCoords(data)).sort(function(a,b) { return b-length - a.length; }));
+
+        hexagons.exit().remove();
+        hexagons
+          .enter().append('path')
           .attr('d', hex.hexagon())
-          .attr("fill", function(d) { return color(d.length); })
-          .attr('stroke', 'gray')
-          .attr('style', 'pointer-events:visiblePainted;')
-          .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; })
-          .on('mouseover', function(d) {
-            let listOfIds = [];
-            let detailsNode = document.getElementById('hexDetails');
-            let coords = map.layerPointToLatLng([d.x, d.y]);
+          .attr('class', 'hexagon')
+          .attr('fill-opacity', .5)
+          .merge(hexagons)
+            .attr('d', hex.hexagon())
+            .attr("fill", function(d) { return color(d.length); })
+            .attr('stroke', 'gray')
+            .attr('style', 'pointer-events:visiblePainted;')
+            .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; })
+            .on('mouseover', function(d) {
+              let listOfIds = [];
+              let detailsNode = document.getElementById('hexDetails');
+              let coords = map.layerPointToLatLng([d.x, d.y]);
 
-            d3.select(this).classed('hexHover', true);
+              d3.select(this).classed('hexHover', true);
 
-            d.forEach(d => {
-              listOfIds.push(d[2])
-              return listOfIds;
+              d.forEach(d => {
+                listOfIds.push(d[2])
+                return listOfIds;
+              })
+              
+              const markup = `
+              <h5>
+                ${d.length} cases near</span>
+              </h5>
+              <h5>
+                ${coords.lat.toFixed(2)}, ${coords.lng.toFixed(2)}
+              </h5>
+              <ul></ul>
+              `;
+              detailsNode.innerHTML = markup;
             })
-            
-            const markup = `
-            <h5>
-              ${d.length} cases near</span>
-            </h5>
-            <h5>
-              ${coords.lat.toFixed(2)}, ${coords.lng.toFixed(2)}
-            </h5>
-            <ul></ul>
-            `;
-            detailsNode.innerHTML = markup;
-          })
 
-          .on("mouseout", function(d) {
-            d3.select(this).classed('hexHover', !d3.select(this).classed('hexHover'));
+            .on("mouseout", function(d) {
+              d3.select(this).classed('hexHover', !d3.select(this).classed('hexHover'));
 
-            let detailsNode = document.getElementById('hexDetails');
-            detailsNode.innerHTML = '';
-          });
+              let detailsNode = document.getElementById('hexDetails');
+              detailsNode.innerHTML = '';
+            });
+        }
       }//end of Update
   }
 }//-->END redraw()

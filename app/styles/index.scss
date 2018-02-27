@@ -7,10 +7,14 @@
 	font-family: 'Roboto', sans-serif;
 }
 
+h2{
+	font-weight: 300;
+}
+
 body, html {
     padding: 0px;
     margin: 0px;
-    background: #f2f2f2;
+    // background: #f2f2f2;
 }
 
 .no-padding{
@@ -19,15 +23,32 @@ body, html {
 
 #map-section{
 	height: 100vh;
-	background-color: #7F858B;
+}
+
+
+.title-container{
+	min-height: 55px;
+	background-color: #333434;
+	-webkit-box-shadow: 0px 5px 11px 1px rgba(0,0,0,0.39);
+	-moz-box-shadow: 0px 5px 11px 1px rgba(0,0,0,0.39);
+	box-shadow: 0px 5px 11px 1px rgba(0,0,0,0.39);
+	border-bottom: 3px solid #26c18a;
+
+	h3{
+		margin: 0;
+		padding: 14px 12px;
+		color: #f2f2f2;
+		font-weight: lighter;
+	}
 }
 
 #sidebar {
-  background-color:#394141;
+  background-color:#dedede;
   height:100vh;
   right:0;
-  color: #f2f2f2;
-  font-weight: 300;
+  color: #333;
+  font-weight: lighter;
+  border-left: 2px solid #26c18a;
 }
 
 .module {
@@ -43,7 +64,7 @@ body, html {
 
 #map {
 	width: 100%;
-	min-height: 80vh;
+	min-height: 75vh;
 	margin: 0;
 	padding: 0;
 	z-index: 1;
@@ -55,14 +76,15 @@ body, html {
 
 .timeline-container{
 	height: 100%;
-	background-color: #7F858B;
+	background-color: #dedede;
 	padding: 0px 20px 0px 15px; 
-}
 
-.timeline-container > h4{
-	margin-top: 20px;
-	color: #f2f2f2;
-	font-weight: 300;
+	h4{
+		margin: 0;
+		padding: 14px 12px;
+		color: #26c18a;
+		font-weight: lighter;
+	}
 }
 
 .axis > .domain{
@@ -70,12 +92,12 @@ body, html {
 }
 
 .axis > .tick > line{
-	stroke: #f2f2f2;
+	stroke: #26c18a;
 	stroke-opacity: 0.2;
 }
 
 .axis > .tick > text{
-	fill: #f2f2f2;
+	fill: #666;
 	font-weight: 300;
 }
 
@@ -136,4 +158,14 @@ svg {
 			margin-bottom: 3px;
 		}
 	}
+}
+
+#gradient{
+	width: 100px;
+	height: 500px;
+	// background-color: blue;
+	position: absolute;
+	z-index: 1000;
+	// opacity: 0.4;
+	border-color: red;
 }
