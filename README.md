@@ -2,6 +2,7 @@
 This application connects to the DHIS2 platform and retrieves outbreak program data (event data) that contains both clinical and genomic indicators.
 
 ### How to run:
+0. Setup a DHIS2 server this app can connect to
 1. Clone the repository
 2. In the terminal, `cd` to the folder and then `npm install` to intall dependencies
 3. Run `npm run dev` and open `http://localhost:3000`
