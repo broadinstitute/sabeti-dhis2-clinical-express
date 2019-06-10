@@ -14,7 +14,7 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.18.1",
     "babel-core": "^6.25.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
@@ -39,7 +39,7 @@
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",
     "request": "^2.81.0",
-    "sequelize": "^4.4.2",
+    "sequelize": "^5.3.0",
     "volleyball": "^1.4.1",
     "webpack-livereload-plugin": "^0.11.0"
   },
